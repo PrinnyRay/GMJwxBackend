@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var wx = require('../config/wx');
+var crypto = require('');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -9,8 +10,8 @@ router.get('/', function(req, res, next) {
   var nonce = req.query.nonce;
   var timestamp = req.query.timestamp;
   var echostr = req.query.echostr;
-  var str = [token, timestamp, nonce].sort().join('')
-  var sha = sha1(str);
+  var str = [token, timestamp, nonce].sort().join('');
+  var sha = crypto.createHash('sha1').update(str).digest('hex');
 
   if(sha === signature) {
     res.send(echostr + '');
