@@ -2,7 +2,13 @@ var express = require('express');
 var router = express.Router();
 var wx = require('../config/wx');
 var crypto = require('crypto');
+var wechat = require('wechat');
 
+router.use('/wechat', wechat(wx.config, (req, res, next) => {
+  if(req.weixin.content === '随便看看') {
+    res.reply('呵呵');
+  }
+}));
 /* GET home page. */
 router.get('/', function(req, res, next) {
   var token = wx.token;
