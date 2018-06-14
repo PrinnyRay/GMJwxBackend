@@ -20,7 +20,7 @@ api.createMenu(menu, () => {
 });
 var events = new Event();
 events.add('menu_btn_random', (req, res, next) => {
-  if(req.message.event == 'click') {
+  if(req.message.Event == 'CLICK') {
     movie.count({}, (err, c) => {
       movie.find({}, (err, doc) => {
         moviedoc = doc[parseInt(Math.random() * c)];
