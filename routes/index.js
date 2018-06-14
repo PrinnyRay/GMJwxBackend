@@ -2,9 +2,8 @@ var express = require('express');
 var router = express.Router();
 var wx = require('../config/wx');
 var crypto = require('crypto');
-var xml2js = require('xml2js');
-var parse = new xml2js.Parser();
-var builder = new xml2js.Builder();
+var movie = require('../models/movie');
+var p = require('../utils/parseInfo');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -21,6 +20,11 @@ router.get('/', function(req, res, next) {
   } else {
     res.send('error');
   }
+  // movie.count({}, (err, c) => {
+  //   movie.find({}, (err, doc) => {
+  //     res.send(p(doc[parseInt(Math.random() * c)]));
+  //   })
+  // })
 });
 
 module.exports = router;

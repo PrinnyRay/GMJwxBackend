@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var db = mongoose.connect('mongodb://localhost/GMJwxBackend');
+var db = mongoose.connect('mongodb://localhost:27017/GMJwxBackend');
 var Schema = mongoose.Schema;
 
 var movieSchema = new Schema({
@@ -7,7 +7,7 @@ var movieSchema = new Schema({
     title : String,
     titleEng : String,
     alias : Array,
-    rate : Double,
+    rate : Number,
     countries : Array,
     categories : Array,
     year : String,
@@ -17,4 +17,4 @@ var movieSchema = new Schema({
     summary : String
 });
 
-module.exports.user = db.model('movie', movieSchema, 'movie');
+module.exports = mongoose.model('movie', movieSchema, 'movie');

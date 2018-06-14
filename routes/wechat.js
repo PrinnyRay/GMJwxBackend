@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var wechat = require('wechat');
 var movie = require('../models/movie');
+var parse = require('../utils/parseInfo');
 
 var config = {
   token: 'wrsndm',
@@ -18,7 +19,8 @@ router.use('/', wechat(config, (req, res, next) => {
   if(message.Content === '随便看看') {
     movie.count({}, (err, c) => {
       movie.find({}, (err, doc) => {
-        res.reply(doc[parseInt(Math.random() * c)])
+        movie = doc[parseInt(Math.random() * c)]
+        res.reply(parse(movie));
       })
     })
   } else {
