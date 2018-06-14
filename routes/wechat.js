@@ -19,8 +19,11 @@ router.use('/', wechat(config, (req, res, next) => {
   if(message.Content === '随便看看') {
     movie.count({}, (err, c) => {
       movie.find({}, (err, doc) => {
-        movie = doc[parseInt(Math.random() * c)]
-        res.reply(parse(movie));
+        moviedoc = doc[parseInt(Math.random() * c)];
+        res.reply([
+          {parse(moviedoc)},
+          {picurl:moviedoc.cover}
+        ]);
       })
     })
   } else {
