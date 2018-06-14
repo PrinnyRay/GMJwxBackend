@@ -1,7 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var wx = require('../config/wx');
-var crypto = require('crypto');;
+var crypto = require('crypto');
+var xml2js = require('xml2js');
+var parse = new xml2js.Parser();
+var builder = new xml2js.Builder();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

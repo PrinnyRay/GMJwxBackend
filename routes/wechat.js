@@ -1,13 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var wechat = require('wechat');
+var movie = require('../models/movie');
 
 var config = {
   token: 'wrsndm',
-  appid: 'wx65001218d29e581f',
-  appsecret: '803205e4df183ea4832d650c8355bd5d',
+  appid: 'wxbf3f7205b87b088f',
+  appsecret: 'ff510609e99295cb143c30a3cc6d2ad5',
   encodingAESKey: 'K0ePPEb896e6GjTRsc852VHwpwm7uDHcr3tyXUMETpY',
-  checkSignature: true
+  checkSignature: false
 };
 
 router.use(express.query());
@@ -15,7 +16,11 @@ router.use(express.query());
 router.use('/', wechat(config, (req, res, next) => {
   var message = req.weixin;
   if(message.Content === '随便看看') {
-    res.reply('呵呵');
+    movie.count({}, (err, c) => {
+      movie.find({}, (err, doc) => {
+        res.reply(doc[parseInt(Math.random() * c)])
+      })
+    })
   } else {
     res.reply('111');
   }
