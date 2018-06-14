@@ -1,3 +1,5 @@
+import { MongooseDocument } from 'mongoose';
+
 var express = require('express');
 var router = express.Router();
 var wechat = require('wechat');
@@ -21,8 +23,12 @@ router.use('/', wechat(config, (req, res, next) => {
       movie.find({}, (err, doc) => {
         moviedoc = doc[parseInt(Math.random() * c)];
         res.reply([
-          {parse(moviedoc)},
-          {picurl:moviedoc.cover}
+          {
+            title: moviedoc.title,
+            description: parse(moviedoc),
+            picurl: moviedoc.cover,
+            url: 'http://www.baidu.com'
+          }
         ]);
       })
     })
