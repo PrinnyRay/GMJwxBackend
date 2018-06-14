@@ -20,7 +20,7 @@ api.createMenu(menu, () => {
 });
 var events = new Event();
 events.add('menu_btn_random', (req, res, next) => {
-  if(req.message.Event == 'CLICK') {
+  if(req.weixin.Event === 'CLICK') {
     movie.count({}, (err, c) => {
       movie.find({}, (err, doc) => {
         moviedoc = doc[parseInt(Math.random() * c)];
@@ -39,23 +39,31 @@ events.add('menu_btn_random', (req, res, next) => {
 var handle = Event.dispatch(events);
 
 router.use(express.query());
-router.use('/', wechat(config).event(handle).middlewarify());
+// router.use('/', wechat(config).event(handle).middlewarify());
 router.use('/', wechat(config, (req, res, next) => {
   var message = req.weixin;
-  if(message.Content === '随便看看') {
-    movie.count({}, (err, c) => {
-      movie.find({}, (err, doc) => {
-        moviedoc = doc[parseInt(Math.random() * c)];
-        res.reply([
-          {
-            title: moviedoc.title,
-            description: parse(moviedoc),
-            picurl: moviedoc.cover,
-            url: 'https://movie.douban.com/subject/'+moviedoc.id
+  if(message.MsgType === 'event') {
+    switch(message.Event) {
+      case 'CLICK': {
+        switch(message.EventKey) {
+          case 'menu_btn_random': {
+            movie.count({}, (err, c) => {
+              movie.find({}, (err, doc) => {
+                moviedoc = doc[parseInt(Math.random() * c)];
+                res.reply([
+                  {
+                    title: moviedoc.title,
+                    description: parse(moviedoc),
+                    picurl: moviedoc.cover,
+                    url: 'https://movie.douban.com/subject/'+moviedoc.id
+                  }
+                ]);
+              });
+            });
           }
-        ]);
-      });
-    });
+        }
+      }
+    }
   } else {
     res.reply('111');
   }
