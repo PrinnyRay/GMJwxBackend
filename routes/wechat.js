@@ -1,5 +1,3 @@
-import { MongooseDocument } from 'mongoose';
-
 var express = require('express');
 var router = express.Router();
 var wechat = require('wechat');
