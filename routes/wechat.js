@@ -18,25 +18,25 @@ var api = new wechatapi(config.appid, config.appsecret);
 api.createMenu(menu, () => {
   console.log('菜单初始化成功');
 });
-var events = new Event();
-events.add('menu_btn_random', (req, res, next) => {
-  if(req.weixin.Event === 'CLICK') {
-    movie.count({}, (err, c) => {
-      movie.find({}, (err, doc) => {
-        moviedoc = doc[parseInt(Math.random() * c)];
-        res.reply([
-          {
-            title: moviedoc.title,
-            description: parse(moviedoc),
-            picurl: moviedoc.cover,
-            url: 'https://movie.douban.com/subject/'+moviedoc.id
-          }
-        ]);
-      });
-    });
-  }
-});
-var handle = Event.dispatch(events);
+// var events = new Event();
+// events.add('menu_btn_random', (req, res, next) => {
+//   if(req.weixin.Event === 'CLICK') {
+//     movie.count({}, (err, c) => {
+//       movie.find({}, (err, doc) => {
+//         moviedoc = doc[parseInt(Math.random() * c)];
+//         res.reply([
+//           {
+//             title: moviedoc.title,
+//             description: parse(moviedoc),
+//             picurl: moviedoc.cover,
+//             url: 'https://movie.douban.com/subject/'+moviedoc.id
+//           }
+//         ]);
+//       });
+//     });
+//   }
+// });
+// var handle = Event.dispatch(events);
 
 router.use(express.query());
 // router.use('/', wechat(config).event(handle).middlewarify());
