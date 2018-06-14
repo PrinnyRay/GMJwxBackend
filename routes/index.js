@@ -20,11 +20,6 @@ router.get('/', function(req, res, next) {
   } else {
     res.send('error');
   }
-  // movie.count({}, (err, c) => {
-  //   movie.find({}, (err, doc) => {
-  //     res.send(p(doc[parseInt(Math.random() * c)]));
-  //   })
-  // })
 });
 
 module.exports = router;

@@ -4,6 +4,11 @@
       "type":"click",
       "name":"随便看看",
       "key":"menu_btn_random"
+    },
+    {
+      "type":"click",
+      "name":"新近好片",
+      "key":"menu_btn_trend"
     }
   ]
 }

@@ -17,7 +17,7 @@ def infoHandler(res):
         'categories' : res['genres'],
         'year' : res['year'],
         'cover' : res['images']['small'],
-        'director' : res['directors'][0]['name'],
+        'director' : (res['directors'][0]['name'] if res['directors'] else ''),
         'starring' : [i['name'] for i in res['casts']],
         'summary' : res['summary'][:-3]
     }
