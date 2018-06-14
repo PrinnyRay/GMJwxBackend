@@ -20,19 +20,21 @@ api.createMenu(menu, () => {
 });
 var events = new Event();
 events.add('menu_btn_random', (req, res, next) => {
-  movie.count({}, (err, c) => {
-    movie.find({}, (err, doc) => {
-      moviedoc = doc[parseInt(Math.random() * c)];
-      res.reply([
-        {
-          title: moviedoc.title,
-          description: parse(moviedoc),
-          picurl: moviedoc.cover,
-          url: 'https://movie.douban.com/subject/'+moviedoc.id
-        }
-      ]);
+  if(req.message.event == 'click') {
+    movie.count({}, (err, c) => {
+      movie.find({}, (err, doc) => {
+        moviedoc = doc[parseInt(Math.random() * c)];
+        res.reply([
+          {
+            title: moviedoc.title,
+            description: parse(moviedoc),
+            picurl: moviedoc.cover,
+            url: 'https://movie.douban.com/subject/'+moviedoc.id
+          }
+        ]);
+      });
     });
-  });
+  }
 });
 var handle = Event.dispatch(events);
 
