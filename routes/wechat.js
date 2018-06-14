@@ -41,6 +41,7 @@ router.use('/', wechat(config, (req, res, next) => {
                 ]);
               });
             });
+            break;
           }
           case 'menu_btn_trend': {
             movie.find({year:2018}).sort({'rate':1}).limit(10).exec((err, docs) => {
