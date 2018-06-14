@@ -25,7 +25,7 @@ router.use('/', wechat(config, (req, res, next) => {
             title: moviedoc.title,
             description: parse(moviedoc),
             picurl: moviedoc.cover,
-            url: 'http://www.baidu.com'
+            url: 'https://movie.douban.com/subject/'+moviedoc.id
           }
         ]);
       })
