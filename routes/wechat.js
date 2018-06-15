@@ -57,7 +57,7 @@ router.use('/', wechat(config, (req, res, next) => {
     }
   } else if(message.MsgType === 'text') {
     if(/[0-9]{5,9}/.test(message.Content)) {
-      movie.findOne({id:message.Content}).exec((err, doc) => {
+      movie.findOne({id:(message.Content).toString}).exec((err, doc) => {
         if(doc) {
           res.reply(p.parse(doc));
         } else {
