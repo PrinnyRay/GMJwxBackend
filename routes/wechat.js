@@ -57,11 +57,18 @@ router.use('/', wechat(config, (req, res, next) => {
     }
   } else if(message.MsgType === 'text') {
     if(/[0-9]{5,9}/.test(message.Content)) {
-      movie.findOne({id:(message.Content).toString}).exec((err, doc) => {
+      movie.findOne({id:(message.Content).toString()}).exec((err, doc) => {
         if(doc) {
           res.reply(p.parse(doc));
         } else {
-          res.reply("没有找到对应的记录。");
+          res.reply([
+            {
+              title: doc.title,
+              description: p.parse(doc),
+              picurl: doc.cover,
+              url: 'https://movie.douban.com/subject/'+doc.id
+            }
+          ]);
         }
       });
     }
