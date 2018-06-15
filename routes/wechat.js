@@ -31,7 +31,7 @@ router.use('/', wechat(config, (req, res, next) => {
             movie.count({}, (err, c) => {
               movie.find({}, (err, doc) => {
                 moviedoc = doc[parseInt(Math.random() * c)];
-                res.reply([p.replyPicText(doc)]);
+                res.reply([p.replyPicText(moviedoc)]);
               });
             });
             break;
