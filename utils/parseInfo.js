@@ -14,7 +14,15 @@ var parseInfo = {
     res = "";
     res += movie.title + ' ' +movie.id + "\n";
     return res;
-  }
+	},
+	'replyPicText' : function(movie) {
+		return {
+			title: movie.title,
+      description: this.parseInfo(movie),
+      picurl: movie.cover,
+      url: 'https://movie.douban.com/subject/'+movie.id
+		}
+	}
 }
 
 module.exports = parseInfo;

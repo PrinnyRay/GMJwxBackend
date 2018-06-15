@@ -31,14 +31,7 @@ router.use('/', wechat(config, (req, res, next) => {
             movie.count({}, (err, c) => {
               movie.find({}, (err, doc) => {
                 moviedoc = doc[parseInt(Math.random() * c)];
-                res.reply([
-                  {
-                    title: moviedoc.title,
-                    description: p.parse(moviedoc),
-                    picurl: moviedoc.cover,
-                    url: 'https://movie.douban.com/subject/'+moviedoc.id
-                  }
-                ]);
+                res.reply([p.replyPicText(doc)]);
               });
             });
             break;
@@ -59,14 +52,7 @@ router.use('/', wechat(config, (req, res, next) => {
     if(/[0-9]{5,9}/.test(message.Content)) {
       movie.findOne({id:(message.Content).toString()}).exec((err, doc) => {
         if(doc) {
-          res.reply([
-            {
-              title: doc.title,
-              description: p.parse(doc),
-              picurl: doc.cover,
-              url: 'https://movie.douban.com/subject/'+doc.id
-            }
-          ]);
+          res.reply([p.replyPicText(doc)]);
         } else {
           res.reply("没有找到对应的记录。");
         }
