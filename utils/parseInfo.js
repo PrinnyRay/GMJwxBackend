@@ -18,7 +18,7 @@ var parseInfo = {
 	'replyPicText' : function(movie) {
 		return {
 			title: movie.title,
-      description: this.parseInfo(movie),
+      description: this.parse(movie),
       picurl: movie.cover,
       url: 'https://movie.douban.com/subject/'+movie.id
 		}
