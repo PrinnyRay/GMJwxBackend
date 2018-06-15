@@ -45,15 +45,25 @@ router.use('/', wechat(config, (req, res, next) => {
           }
           case 'menu_btn_trend': {
             movie.find({year:2018}).sort({'rate':1}).limit(10).exec((err, docs) => {
-              result = "查询到的结果为：\n";
+              result = "2018年上映的精品电影有：\n";
               docs.forEach((item, index) => {
                 result += p.parseQuery(item);
               });
               res.reply(result);
-            })
+            });
           }
         }
       }
+    }
+  } else if(message.MsgType === 'text') {
+    if(/[0-9]{5,9}/.test(message.Content)) {
+      movie.findOne({id:message.Content}).exec((err, doc) => {
+        if(doc) {
+          res.reply(p.parse(doc));
+        } else {
+          res.reply("没有找到对应的记录。");
+        }
+      });
     }
   } else {
     res.reply('111');
