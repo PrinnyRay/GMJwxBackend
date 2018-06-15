@@ -59,8 +59,6 @@ router.use('/', wechat(config, (req, res, next) => {
     if(/[0-9]{5,9}/.test(message.Content)) {
       movie.findOne({id:(message.Content).toString()}).exec((err, doc) => {
         if(doc) {
-          res.reply(p.parse(doc));
-        } else {
           res.reply([
             {
               title: doc.title,
@@ -69,6 +67,8 @@ router.use('/', wechat(config, (req, res, next) => {
               url: 'https://movie.douban.com/subject/'+doc.id
             }
           ]);
+        } else {
+          res.reply("没有找到对应的记录。");
         }
       });
     }
