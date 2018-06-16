@@ -5,7 +5,7 @@ var movie = require('../models/movie');
 var p = require('../utils/parseInfo');
 var wechatapi = require('wechat-api');
 var menu = require('../config/menu.json');
-var Event = require('wechat').Event;
+var wx = require('../config/wx');
 
 var config = {
   token: 'wrsndm',
@@ -27,6 +27,9 @@ router.use('/', wechat(config, (req, res, next) => {
     switch(message.Event) {
       case 'CLICK': {
         switch(message.EventKey) {
+          case 'menu_btn_how2use': {
+            res.reply(wx.reply.how2use);
+          }
           case 'menu_btn_random': {
             movie.count({}, (err, c) => {
               movie.find({}, (err, doc) => {

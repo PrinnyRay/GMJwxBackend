@@ -11,18 +11,29 @@ def infoHandler(res):
         'id' : res['id'],
         'title' : res['title'],
         'titleEng' : res['original_title'],
-        'alias' : res['aka'],
+        'alias' : res['aka'] if 'aka' in res else '',
         'rate' : res['rating']['average'],
-        'countries' : res['countries'],
+        'countries' : res['countries'] if 'countries' in res else '',
         'categories' : res['genres'],
         'year' : res['year'],
         'cover' : res['images']['small'],
         'director' : (res['directors'][0]['name'] if res['directors'] else ''),
         'starring' : [i['name'] for i in res['casts']],
-        'summary' : res['summary'][:-3]
+        'summary' : res['summary'][:-3] if 'summary' in res else ''
     }
 
-def main():
+def getTop250():
+    url = 'http://api.douban.com/v2/movie/top250?start='
+    conn = MongoClient('localhost', 27017)
+    db = conn.GMJwxBackend
+    col = db.top250
+    for start in range(0,250,20):
+        res = requests.get(url+str(start)).json()
+        for i in res['subjects']:
+            col.save(infoHandler(i))
+
+
+def getDetail():
     c = []
     base = 'http://api.douban.com/v2/movie/subject/'
     count = 0
@@ -50,4 +61,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    getDetail()
+    # getTop250()

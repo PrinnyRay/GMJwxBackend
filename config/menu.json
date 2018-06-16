@@ -11,10 +11,21 @@
         },
         {
           "type":"click",
-          "name":"新近好片",
+          "name":"2018流行",
           "key":"menu_btn_trend"
+        },
+        {
+          "type":"click",
+          "name":"豆瓣榜单",
+          "key":"menu_btn_doubanList"
         }
       ]
+    },
+    {
+      "type":"click",
+      "name":"使用说明",
+      "key":"menu_btn_how2use"
+
     },
     {
       "type":"view",
