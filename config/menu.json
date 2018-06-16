@@ -2,13 +2,24 @@
   "button":[
     {
       "type":"click",
-      "name":"随便看看",
-      "key":"menu_btn_random"
+      "name":"影片推荐",
+      "sub_button":[
+        {
+          "type":"click",
+          "name":"随便看看",
+          "key":"menu_btn_random"
+        },
+        {
+          "type":"click",
+          "name":"新近好片",
+          "key":"menu_btn_trend"
+        }
+      ]
     },
     {
-      "type":"click",
-      "name":"新近好片",
-      "key":"menu_btn_trend"
+      "type":"view",
+      "name":"正在热映",
+      "url":"https://dianying.taobao.com/"
     }
   ]
 }

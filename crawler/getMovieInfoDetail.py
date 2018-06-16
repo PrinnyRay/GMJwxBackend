@@ -40,10 +40,11 @@ def main():
         print(now, end=' --- ')
         if not col.find_one({'id':line[:-1]}):
             res = requests.get(url=url).json()
+            # print(res)
             res = infoHandler(res)
             col.save(res)
             print('第%d个 --- %s 写入数据库' % (count, res['title']))
-            time.sleep(25)
+            # time.sleep(30)
         else:
             print('第%d个 --- %s 记录已存在，跳过' % (count, col.find_one({'id':line[:-1]})['title']))
 
