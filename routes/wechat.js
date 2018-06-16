@@ -63,7 +63,7 @@ router.use('/', wechat(config, (req, res, next) => {
       });
     }
   } else if(/[0-9]{4}/.test(message.Content)) {
-    movie.find({year:(message.Content)}).sort({'rate':1}).limit(20).exec((err, docs) => {
+    movie.find({year:(message.Content).toString()}).sort({'rate':1}).limit(20).exec((err, docs) => {
       if(docs) {
         result = message.Content + "上映的精品电影有：\n";
         docs.forEach((item, index) => {
@@ -74,8 +74,8 @@ router.use('/', wechat(config, (req, res, next) => {
         res.reply(wx.reply.notFound);
       }
     })
-  } else if(/^!.{2}$/.test(message.Content)) {
-    movie.find({countries:message.Content.slice(1)}).sort({'rate':1}).limit(20).exec((err, docs) => {
+  } else if(/^#.{2}$/.test(message.Content)) {
+    movie.find({countries:message.Content.toString().slice(1)}).sort({'rate':1}).limit(20).exec((err, docs) => {
       if(docs) {
         result = message.Content.slice(1) + '类的精品电影有：\n';
         docs.forEach((item, index) => {
