@@ -77,7 +77,7 @@ router.use('/', wechat(config, (req, res, next) => {
   } else if(/^!.{2}$/.test(message.Content)) {
     movie.find({countries:message.Content.slice(1)}).sort({'rate':1}).limit(20).exec((err, docs) => {
       if(docs) {
-        result = message.Content.slice(1) + '类的精品电影有：\n'；
+        result = message.Content.slice(1) + '类的精品电影有：\n';
         docs.forEach((item, index) => {
           result += p.parseQuery(item);
         });
