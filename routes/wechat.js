@@ -58,12 +58,36 @@ router.use('/', wechat(config, (req, res, next) => {
         if(doc) {
           res.reply([p.replyPicText(doc)]);
         } else {
-          res.reply("没有找到对应的记录。");
+          res.reply(wx.reply.notFound);
         }
       });
     }
+  } else if(/[0-9]{4}/.test(message.Content)) {
+    movie.find({year:(message.Content)}).sort({'rate':1}).limit(20).exec((err, docs) => {
+      if(docs) {
+        result = message.Content + "上映的精品电影有：\n";
+        docs.forEach((item, index) => {
+          result += p.parseQuery(item);
+        });
+        res.reply(result);
+      } else {
+        res.reply(wx.reply.notFound);
+      }
+    })
+  } else if(/^!.{2}$/.test(message.Content)) {
+    movie.find({countries:message.Content.slice(1)}).sort({'rate':1}).limit(20).exec((err, docs) => {
+      if(docs) {
+        result = message.Content.slice(1) + '类的精品电影有：\n'；
+        docs.forEach((item, index) => {
+          result += p.parseQuery(item);
+        });
+        res.reply(result);
+      } else {
+        res.reply(wx.reply.notFound);
+      }
+    })
   } else {
-    res.reply('111');
+    res.reply(wx.reply.how2use);
   }
 }));
 
