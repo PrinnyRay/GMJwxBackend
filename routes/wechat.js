@@ -29,6 +29,7 @@ router.use('/', wechat(config, (req, res, next) => {
         switch(message.EventKey) {
           case 'menu_btn_how2use': {
             res.reply(wx.reply.how2use);
+            break;
           }
           case 'menu_btn_random': {
             movie.count({}, (err, c) => {
