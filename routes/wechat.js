@@ -58,6 +58,7 @@ router.use('/', wechat(config, (req, res, next) => {
                 result = result + "NO." + (index+1).toString() + p.parseQuery(item);
               });
               res.reply(result);
+              res.reply(result);
             });
             break;
           }
