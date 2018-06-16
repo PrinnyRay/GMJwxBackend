@@ -52,7 +52,7 @@ router.use('/', wechat(config, (req, res, next) => {
         }
       }
     }
-  } else if(message.MsgType === 'text') {
+  } else if (message.MsgType === 'text') {
     if(/[0-9]{5,9}/.test(message.Content)) {
       movie.findOne({id:(message.Content).toString()}).exec((err, doc) => {
         if(doc) {
@@ -61,34 +61,36 @@ router.use('/', wechat(config, (req, res, next) => {
           res.reply(wx.reply.notFound);
         }
       });
+    } else if(/[0-9]{4}/.test(message.Content)) {
+      movie.find({year:(message.Content).toString()}).sort({'rate':1}).limit(20).exec((err, docs) => {
+        if(docs) {
+          result = message.Content + "上映的精品电影有：\n";
+          docs.forEach((item, index) => {
+            result += p.parseQuery(item);
+          });
+          res.reply(result);
+        } else {
+          res.reply(wx.reply.notFound);
+        }
+      })
+    } else if(/^#.{2}$/.test(message.Content)) {
+      movie.find({countries:message.Content.toString().slice(1)}).sort({'rate':1}).limit(20).exec((err, docs) => {
+        if(docs) {
+          result = message.Content.slice(1) + '类的精品电影有：\n';
+          docs.forEach((item, index) => {
+            result += p.parseQuery(item);
+          });
+          res.reply(result);
+        } else {
+          res.reply(wx.reply.notFound);
+        }
+      })
+    } else {
+      res.reply(wx.reply.how2use);
     }
-  } else if(/[0-9]{4}/.test(message.Content)) {
-    movie.find({year:(message.Content).toString()}).sort({'rate':1}).limit(20).exec((err, docs) => {
-      if(docs) {
-        result = message.Content + "上映的精品电影有：\n";
-        docs.forEach((item, index) => {
-          result += p.parseQuery(item);
-        });
-        res.reply(result);
-      } else {
-        res.reply(wx.reply.notFound);
-      }
-    })
-  } else if(/^#.{2}$/.test(message.Content)) {
-    movie.find({countries:message.Content.toString().slice(1)}).sort({'rate':1}).limit(20).exec((err, docs) => {
-      if(docs) {
-        result = message.Content.slice(1) + '类的精品电影有：\n';
-        docs.forEach((item, index) => {
-          result += p.parseQuery(item);
-        });
-        res.reply(result);
-      } else {
-        res.reply(wx.reply.notFound);
-      }
-    })
   } else {
     res.reply(wx.reply.how2use);
   }
 }));
 
-module.exports = router
+module.exports = router;
