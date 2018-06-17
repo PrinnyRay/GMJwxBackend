@@ -90,7 +90,7 @@ router.use('/', wechat(config, (req, res, next) => {
         }
       });
     } else if(/^#.{2}$/.test(message.Content)) {
-      movie.find({categories:message.Content.toString().slice(1)}).sort({'rate':-1}).limit(20).exec((err, docs) => {
+      movie.find({categories:message.Content.toString().slice(1)}).sort({'rate':-1}).limit(30).exec((err, docs) => {
         if(docs) {
           result = message.Content.slice(1) + "类型的电影有：\n";
           docs.forEach((item, index) => {
@@ -101,7 +101,7 @@ router.use('/', wechat(config, (req, res, next) => {
           res.reply(wx.reply.notFound);
         }
       });
-    } else if(/!.+/.test(message.Content)) {
+    } else if(/[!！].+/.test(message.Content)) {
       movie.find({starring:new RegExp(message.Content.toString().slice(1))}).sort({'rate':-1}).limit(30).exec((err, docs) => {
         if(docs) {
           result = message.Content.slice(1) + "主演的电影有：\n";
