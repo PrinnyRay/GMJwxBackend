@@ -78,7 +78,7 @@ router.use('/', wechat(config, (req, res, next) => {
         }
       });
     } else if(/^\*[0-9]{4}$/.test(message.Content)) {
-      movie.find({year:(message.Content).toString()}).sort({'rate':-1}).limit(30).exec((err, docs) => {
+      movie.find({year:(message.Content).toString().slice(1)}).sort({'rate':-1}).limit(30).exec((err, docs) => {
         if(docs) {
           result = message.Content + "上映的精品电影有：\n";
           docs.forEach((item, index) => {
