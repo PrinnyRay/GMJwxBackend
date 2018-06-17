@@ -78,7 +78,7 @@ router.use('/', wechat(config, (req, res, next) => {
         }
       });
     } else if(/^\*[0-9]{4}$/.test(message.Content)) {
-      movie.find({year:(message.Content).toString()}).sort({'rate':-1}).limit(20).exec((err, docs) => {
+      movie.find({year:(message.Content).toString()}).sort({'rate':-1}).limit(30).exec((err, docs) => {
         if(docs) {
           result = message.Content + "上映的精品电影有：\n";
           docs.forEach((item, index) => {
@@ -102,7 +102,7 @@ router.use('/', wechat(config, (req, res, next) => {
         }
       });
     } else if(/!.+/.test(message.Content)) {
-      movie.find({starring:new RegExp(message.Content.toString().slice(1))}).sort({'rate':-1}).limit(20).exec((err, docs) => {
+      movie.find({starring:new RegExp(message.Content.toString().slice(1))}).sort({'rate':-1}).limit(30).exec((err, docs) => {
         if(docs) {
           result = message.Content.slice(1) + "主演的电影有：\n";
           docs.forEach((item, index) => {
@@ -114,7 +114,7 @@ router.use('/', wechat(config, (req, res, next) => {
         }
       });
     } else {
-      movie.find({title:new RegExp(message.Content.toString())}).sort({'rate':-1}).limit(20).exec((err, docs) => {
+      movie.find({title:new RegExp(message.Content.toString())}).sort({'rate':-1}).limit(30).exec((err, docs) => {
         if(docs) {
           result = "关于" + message.Content.slice(1) + "的电影有：\n";
           docs.forEach((item, index) => {
