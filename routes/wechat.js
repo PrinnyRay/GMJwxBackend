@@ -43,7 +43,7 @@ router.use('/', wechat(config, (req, res, next) => {
           }
           case 'menu_btn_trend': {
             movie.find({year:new Date().getFullYear()}).sort({'rate':-1}).limit(20).exec((err, docs) => {
-              result = "今年上映的精品电影有：\n";
+              result = "今年上映的电影有：\n";
               docs.forEach((item, index) => {
                 result += p.parseQuery(item);
               });
