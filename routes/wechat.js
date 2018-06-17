@@ -52,7 +52,7 @@ router.use('/', wechat(config, (req, res, next) => {
             break;
           }
           case 'menu_btn_doubanList': {
-            top250.find().sort({rate:-1}).limit(20).exec((err, docs) => {
+            top250.find().sort({rate:-1}).limit(50).exec((err, docs) => {
               result = "豆瓣高分榜单：\n";
               docs.forEach((item, index) => {
                 result = result + "NO." + (index+1).toString() + p.parseQuery(item);
