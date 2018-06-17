@@ -55,7 +55,7 @@ router.use('/', wechat(config, (req, res, next) => {
             top250.find().sort({rate:-1}).limit(50).exec((err, docs) => {
               result = "豆瓣高分榜单：\n";
               docs.forEach((item, index) => {
-                result = result + "NO." + (index+1).toString() + p.parseQuery(item);
+                result = result + "NO." + (index+1).toString() + ' ' + p.parseQuery(item);
               });
               res.reply(result);
             });
