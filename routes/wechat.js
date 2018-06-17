@@ -4,7 +4,6 @@ var wechat = require('wechat');
 var movie = require('../models/movie');
 var top250 = require('../models/top250');
 var p = require('../utils/parseInfo');
-var wechatapi = require('wechat-api');
 var menu = require('../config/menu.json');
 var wx = require('../config/wx');
 
