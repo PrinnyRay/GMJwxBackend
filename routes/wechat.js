@@ -98,7 +98,7 @@ router.use('/', wechat(config, (req, res, next) => {
           res.reply(wx.reply.notFound);
         }
       });
-    } else if(/!.+/.test(message.Content) {
+    } else if(/!.+/.test(message.Content)) {
       movie.find({starring:new RegExp(message.Content.toString().slice(1))}).sort({'rate':-1}).limit(20).exec((err, docs) => {
         if(docs) {
           result = message.Content.slice(1) + "主演的电影有：\n";
@@ -120,8 +120,8 @@ router.use('/', wechat(config, (req, res, next) => {
           res.reply(result);
         } else {
           res.reply(wx.reply.notFound);
-      })
-      res.reply(wx.reply.how2use);
+        }
+      });
     }
   } else {
     res.reply(wx.reply.how2use);
