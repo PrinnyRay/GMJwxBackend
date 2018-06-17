@@ -63,6 +63,10 @@ router.use('/', wechat(config, (req, res, next) => {
             break;
           }
         }
+        break;
+      }
+      case 'subscribe': {
+        res.reply(ex.reply.welcome);
       }
     }
   } else if (message.MsgType === 'text') {
