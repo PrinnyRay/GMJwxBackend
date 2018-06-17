@@ -42,8 +42,8 @@ router.use('/', wechat(config, (req, res, next) => {
             break;
           }
           case 'menu_btn_trend': {
-            movie.find({year:2018}).sort({'rate':-1}).limit(10).exec((err, docs) => {
-              result = "2018年上映的精品电影有：\n";
+            movie.find({year:new Date().getFullYear()}).sort({'rate':-1}).limit(20).exec((err, docs) => {
+              result = "今年上映的精品电影有：\n";
               docs.forEach((item, index) => {
                 result += p.parseQuery(item);
               });
@@ -52,7 +52,7 @@ router.use('/', wechat(config, (req, res, next) => {
             break;
           }
           case 'menu_btn_doubanList': {
-            top250.find().sort({rate:-1}).limit(50).exec((err, docs) => {
+            top250.find().sort({rate:-1}).limit(20).exec((err, docs) => {
               result = "豆瓣高分榜单：\n";
               docs.forEach((item, index) => {
                 result = result + "NO." + (index+1).toString() + p.parseQuery(item);
@@ -74,7 +74,7 @@ router.use('/', wechat(config, (req, res, next) => {
           res.reply(wx.reply.notFound);
         }
       });
-    } else if(/[0-9]{4}/.test(message.Content)) {
+    } else if(/^\*[0-9]{4}$/.test(message.Content)) {
       movie.find({year:(message.Content).toString()}).sort({'rate':-1}).limit(20).exec((err, docs) => {
         if(docs) {
           result = message.Content + "上映的精品电影有：\n";
@@ -87,9 +87,9 @@ router.use('/', wechat(config, (req, res, next) => {
         }
       });
     } else if(/^#.{2}$/.test(message.Content)) {
-      movie.find({countries:message.Content.toString().slice(1)}).sort({'rate':-1}).limit(20).exec((err, docs) => {
+      movie.find({categories:message.Content.toString().slice(1)}).sort({'rate':-1}).limit(20).exec((err, docs) => {
         if(docs) {
-          result = message.Content.slice(1) + '类的精品电影有：\n';
+          result = message.Content.slice(1) + "类型的电影有：\n";
           docs.forEach((item, index) => {
             result += p.parseQuery(item);
           });
@@ -98,7 +98,29 @@ router.use('/', wechat(config, (req, res, next) => {
           res.reply(wx.reply.notFound);
         }
       });
+    } else if(/!.+/.test(message.Content) {
+      movie.find({starring:new RegExp(message.Content.toString().slice(1))}).sort({'rate':-1}).limit(20).exec((err, docs) => {
+        if(docs) {
+          result = message.Content.slice(1) + "主演的电影有：\n";
+          docs.forEach((item, index) => {
+            result += p.parseQuery(item);
+          }) 
+          res.reply(result);
+        } else {
+          res.reply(wx.reply.notFound);
+        }
+      });
     } else {
+      movie.find({title:new RegExp(message.Content.toString())}).sort({'rate':-1}).limit(20).exec((err, docs) => {
+        if(docs) {
+          result = "关于" + message.Content.slice(1) + "的电影有：\n";
+          docs.forEach((item, index) => {
+            result += p.parseQuery(item);
+          }) 
+          res.reply(result);
+        } else {
+          res.reply(wx.reply.notFound);
+      })
       res.reply(wx.reply.how2use);
     }
   } else {
