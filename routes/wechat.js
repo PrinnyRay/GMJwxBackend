@@ -14,7 +14,6 @@ var config = {
   encodingAESKey: 'K0ePPEb896e6GjTRsc852VHwpwm7uDHcr3tyXUMETpY',
   checkSignature: false
 };
-var api = new wechatapi(config.appid, config.appsecret);
 api.createMenu(menu, () => {
   console.log('菜单初始化成功');
 });
