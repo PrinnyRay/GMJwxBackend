@@ -117,7 +117,7 @@ router.use('/', wechat(config, (req, res, next) => {
     } else {
       movie.find({title:new RegExp(message.Content.toString())}).sort({'rate':-1}).limit(30).exec((err, docs) => {
         if(docs.length != 0) {
-          result = "关于" + message.Content.slice(1) + "的电影有：\n";
+          result = "关于" + message.Content + "的电影有：\n";
           docs.forEach((item, index) => {
             result += p.parseQuery(item);
           }) 
