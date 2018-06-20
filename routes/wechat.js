@@ -80,7 +80,7 @@ router.use('/', wechat(config, (req, res, next) => {
     } else if(/^\*[0-9]{4}$/.test(message.Content)) {
       movie.find({year:(message.Content).toString().slice(1)}).sort({'rate':-1}).limit(30).exec((err, docs) => {
         if(docs.length != 0) {
-          result = message.Content + "上映的精品电影有：\n";
+          result = message.Content.toString().slice(1) + "上映的精品电影有：\n";
           docs.forEach((item, index) => {
             result += p.parseQuery(item);
           });
